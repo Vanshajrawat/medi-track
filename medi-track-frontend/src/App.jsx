@@ -52,7 +52,7 @@ function App() {
             <Route
               path="/register-patient/:campId"
               element={
-                <PrivateRoute requiredRoles={['doctor', 'admin']}>
+                <PrivateRoute requiredRoles={['doctor', 'admin', 'patient']}>
                   <RegisterPatient />
                 </PrivateRoute>
               }

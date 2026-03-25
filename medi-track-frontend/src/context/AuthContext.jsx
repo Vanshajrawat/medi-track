@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      setUser(response.data.data);
+      setUser(response.data.data.user);
       setError(null);
       return response.data;
     } catch (err) {
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
         password,
         role,
       });
-      setUser(response.data.data);
+      setUser(response.data.data.user);
       setError(null);
       return response.data;
     } catch (err) {

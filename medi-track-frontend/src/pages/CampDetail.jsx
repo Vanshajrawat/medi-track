@@ -30,7 +30,7 @@ export default function CampDetail() {
       ]);
 
       setCamp(campRes.data.data);
-      setPatients(patientsRes.data.data.patients || []);
+      setPatients(patientsRes.data.data.docs || []);
       setMedicines(medicinesRes.data.data || []);
       setError(null);
     } catch (err) {

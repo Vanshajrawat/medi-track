@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Patient } from '../models/patient.model.js';
 import { Camp } from '../models/camp.model.js';
 import { ApiError } from '../utils/ApiError.js';
@@ -17,6 +18,13 @@ const registerPatient = asyncHandler(async (req, res) => {
     throw new ApiError(404, 'Camp not found');
   }
 
+  // Ensure vitals are properly structured
+  const patientVitals = {
+    bloodPressure: vitals?.bloodPressure || '',
+    temperature: vitals?.temperature || '',
+    weight: vitals?.weight || '',
+  };
+
   const patient = await Patient.create({
     name,
     age,
@@ -24,7 +32,7 @@ const registerPatient = asyncHandler(async (req, res) => {
     contact: contact || '',
     camp,
     complaint: complaint || '',
-    vitals: vitals || {},
+    vitals: patientVitals,
     assignedDoctor: req.user.role === 'doctor' ? req.user._id : null,
   });
 
@@ -57,7 +65,7 @@ const getPatientsByCamp = asyncHandler(async (req, res) => {
   const result = await Patient.aggregatePaginate(
     Patient.aggregate([
       {
-        $match: { camp: require('mongoose').Types.ObjectId(campId) },
+        $match: { camp: new mongoose.Types.ObjectId(campId) },
       },
       {
         $lookup: {

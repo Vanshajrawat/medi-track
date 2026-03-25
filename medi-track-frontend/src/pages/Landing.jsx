@@ -19,7 +19,7 @@ export default function Landing() {
       const response = await axiosInstance.get('/camps', {
         params: { page, limit: 9 },
       });
-      setCamps(response.data.data.camps);
+      setCamps(response.data.data.docs || []);
       setTotalPages(response.data.data.totalPages);
       setError(null);
     } catch (err) {

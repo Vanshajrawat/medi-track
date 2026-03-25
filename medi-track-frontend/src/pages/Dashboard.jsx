@@ -21,7 +21,7 @@ export default function Dashboard() {
       const response = await axiosInstance.get('/camps', {
         params: { limit: 6 },
       });
-      setCamps(response.data.data.camps);
+      setCamps(response.data.data.docs || []);
       setError(null);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch data');
